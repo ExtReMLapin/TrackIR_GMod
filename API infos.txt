@@ -1,15 +1,15 @@
 	
-	DISCLAMER : Tired + cold + me no speak americano = bad english, no one force you to read, just put the fucking lua file in lua/autorun/client (and the module in lua/bin ) if you're lazy
+	DISCLAMER : Tired + cold + me no speak americano = bad english, no one force you to read, just put the lua file in lua/autorun/client (and the module in lua/bin ) if you're lazy
 
 
-	Here is why i can't provide the source code of the API : When you get i private API you can't put the source code everywhere , THATS THE POINT OF A PRIVATE API
+	Here is why i can't provide the source code of the API : When you get a private API you can't put the source code everywhere , THATS THE POINT OF A PRIVATE API
 	
 	
 		Changelog :
 		(from older to present)
 		--v--INTERNAL VERSION--v--
 		December 2013 -> February 2014 : Working on it, slow work.
-		February 2013 -> All the data on the Build server is lost (Dead HDD)(the server where i work) 
+		February 2013 -> All the data on the Build server is lost (Dead HDD)(the server where we work) 
 		->  "FUCK OFF"
 		February 2014 -> December 2014 : Nothing, i forgot about this project
 		December the 26th : Start working on the project on VS2013

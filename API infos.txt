@@ -5,6 +5,10 @@
 	Here is why i can't provide the source code of the API : When you get a private API you can't put the source code everywhere , THATS THE POINT OF A PRIVATE API
 	
 	
+		Know bugs :
+		-In wac vehicles, the CalcView hook won't ignore the cursor move.
+	
+	
 		Changelog :
 		(from older to present)
 		--v--INTERNAL VERSION--v--
@@ -25,7 +29,7 @@
 		+Adding securities (malloc fail, reg read/find key fail)
 		+Adding copyright thing // okay, Error() in tier0 is not a error message, it just close gmod with an error message
 		--v--PUBLIC VERSION--v--
-
+		
 
 
 		For peoples acting like : 

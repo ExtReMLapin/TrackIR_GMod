@@ -1,0 +1,87 @@
+	
+	DISCLAMER : Tired + cold + me no speak americano = bad english, no one force you to read, just put the fucking lua file in lua/autorun/client (and the module in lua/bin ) if you're lazy
+
+
+	Here is why i can't provide the source code of the API : When you get i private API you can't put the source code everywhere , THATS THE POINT OF A PRIVATE API
+	
+	
+		Changelog :
+		(from older to present)
+		--v--INTERNAL VERSION--v--
+		December 2013 -> February 2014 : Working on it, slow work.
+		February 2013 -> All the data on the Build server is lost (Dead HDD)(the server where i work) 
+		->  "FUCK OFF"
+		February 2014 -> December 2014 : Nothing, i forgot about this project
+		December the 26th : Start working on the project on VS2013
+		December, the 27th : It's working ! (see bellow) // so yeah, 3 months of work -> nothing ; 1 day of work -> its working
+		
+		-Its working (Pitch Roll Yaw)
+		=Fixing (in lua) non-focus NULL pointer with window handle
+		+Adding X Y Z
+		+Fixing things in the Lua part
+		=Better frame control (timer)
+		=Cleaning API (useless functions) /// I BROKE SOMETHING FOK OFF  // ok fixed 
+		-> cleaning : 1740kb->41kb->30->27kb->14kb
+		+Adding securities (malloc fail, reg read/find key fail)
+		+Adding copyright thing // okay, Error() in tier0 is not a error message, it just close gmod with an error message
+		--v--PUBLIC VERSION--v--
+
+
+
+		For peoples acting like : 
+		"UHH Y U NO PROVID TEH CODE SOURCE THERE IS MAYBE A VIRUS IN DIS STAHP RITE NOW"
+		
+		Here are the "maybe dangerous functions used"
+		
+		-Functions used to read (not write) registry keys : We look here 	"Software\NaturalPoint\NATURALPOINT\NPClient Location" [CENSORED - IM NOT EVEN ALLOWED TO PROVIDE ANY ELEMENT FROM THE ORIGINAL API - CENSORED]
+		To check if the NP software is installed and get the NPClient dll location (if a day Gmod move to x64 ( "ahaha don't even think about that" -Garry Newman) the API is ready to move to X64 with the x64 lib and shit)
+		NOWHERE ELSE, so yeah it's safe
+		
+		-LoadLibrary : [CENSORED - IM NOT EVEN ALLOWED TO PROVIDE ANY ELEMENT FROM THE ORIGINAL API - CENSORED]
+		We use it to load the NP interface (just what i said before)
+		
+		There is nothing else really dangerous (nothing dangerous if you don't do shit with the module), there is also segfault protections, some Really important error messages (like if the Registry key is not found) will open a window
+		error message with MessageBoxA, because you're not supposed to use the module if you don't have TrackIR (70% of gmod players are retards)
+		
+		
+		
+		
+		
+		
+		
+
+		How it works :
+		
+		The trackir device (usb) track using 4 IR leds and a (2?) camera (so it works in the dark, (don't try the webcam cheap hack, it sucks, for real)), 
+		send the raw image (no 255 levels of grey image, only 2 colors on the image) to the TrackIR software, store it and calculate the position
+		of the head in a 3d space (we can't do shit here, no api) then, with the api we register the dev ID, load the NaturalPoint interface, send and register Window Handle,
+		and all the other shit, send a list of the coordinates
+		we want to track, and then we can request an update of the data 120 or 60 times per secs (lua run functions from the module that update the struct (in C) 
+		and others lua functions will return the coordinates (see at the bottom)
+
+
+
+		API GUIDE : v v v v v
+		
+		[CENSORED - IM NOT EVEN ALLOWED TO PROVIDE ANY ELEMENT FROM THE ORIGINAL API - CENSORED]
+
+
+	// frame rate
+		Last TrackIR -> 120 fps
+		Oldest ones -> 60 fps
+		
+	// Lua functions
+	
+	
+	Functions returning coordinates :
+	TrackIR_X ; TrackIR_Y ; TrackIR_Z ; TrackIR_Pitch ; TrackIR_Yaw ; TrackIR_Roll
+	
+	Functions returning debug informations : 
+	TrackIR_Debug -> [CENSORED - IM NOT EVEN ALLOWED TO PROVIDE ANY ELEMENT FROM THE ORIGINAL API - CENSORED] (it was the source code, just test it yourself, it return a string with all the data in it)
+	
+	Functions returning informations : 
+	TrackIR_Ver (Not really tested)
+	
+	Functions returning .... nothing : 
+	TrackIR_Update  (Request an update for all the coordinates)
+	

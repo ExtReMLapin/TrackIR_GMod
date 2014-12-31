@@ -1,3 +1,4 @@
+
 local _DEBUG = false;
 
 local draw = draw -- very important, no time (time searching in the global table) to waste
@@ -29,7 +30,9 @@ function Nicerlimit(var, minu, maxi) -- no ugly vew like 'max is 130, min is 130
 	return var
 end
 
+
 function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
+	if wac and ply:InVehicle() then return end
 	local view = {}
 	view.origin 		= origin
 	view.angles			= angles + Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90, -70, 70))

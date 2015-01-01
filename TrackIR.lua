@@ -5,7 +5,24 @@ local draw = draw -- very important, no time (time searching in the global table
 local math = math
 local Angle = Angle
 
-function Nicerlimit(var, minu, maxi) -- no ugly vew like 'max is 130, min is 130, more like max is 130 but every ° over 130 is reducted (exp function)
+
+function RotateVector(vector, angle) -- nice job garry, i have to recode your functions
+	local _vector = vector
+	local _angle = angle
+	_vector:Rotate(angle)
+	return _vector
+end
+
+local function map(value, low1, high1, low2, high2)
+	return (low2 + (value - low1 ) * ( high2 - low2 ) / (high1 - low1))
+end
+
+local function TrackIR_Deg_ToRealDeg(deg1)
+	deg1 = deg1 or 0;
+	return map(deg1, -16383, 16383, -180, 180)
+end
+
+local function Nicerlimit(var, minu, maxi) -- no ugly view like 'max is 130, min is 130, more like max is 130 but every ° over 130 is reducted (exp function)
 	local _maxi = maxi + 0.2*maxi -- +20%
 	local _minu = minu + 0.2*minu
 	local _var = var
@@ -32,10 +49,10 @@ end
 
 
 function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
-	if wac and ply:InVehicle() then return end
+	if LocalPlayer():InVehicle() then return end
 	local view = {}
-	view.origin 		= origin
-	view.angles			= angles + Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90, -70, 70))
+	view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(Var_TrackIR_X/500, -15, 10),-1*math.abs(Nicerlimit(Var_TrackIR_X/900, -5, 5))), (angles))
+	view.angles			= angles + Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -1*Var_TrackIR_X/900, -70, 70))
 	view.fov 			= fov
 	view.znear			= znear
 	view.zfar			= zfar
@@ -53,14 +70,7 @@ hook.Add("Tick", "fix *AfxGetMainWnd()", function() -- wait util gmod has focus,
 	Var_TrackIR_Y = 0
 	Var_TrackIR_Z = 0
 	
-	local function map(value, low1, high1, low2, high2)
-		return (low2 + (value - low1 ) * ( high2 - low2 ) / (high1 - low1))
-	end
 
-	local function TrackIR_Deg_ToRealDeg(deg1)
-		deg1 = deg1 or 0;
-		return map(deg1, -16383, 16383, -180, 180)
-	end
 
 	surface.CreateFont("terminaltitle", {font="Myriad Pro", size=18, antialias=true}) --Title
 

@@ -52,7 +52,7 @@ function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the player
 	if LocalPlayer():InVehicle() then return end
 	local view = {}
 	view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(Var_TrackIR_X/500, -15, 10),-1*math.abs(Nicerlimit(Var_TrackIR_X/900, -5, 5))), (angles))
-	view.angles			= angles + Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -1*Var_TrackIR_X/900, -70, 70))
+	view.angles			= angles + Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
 	view.fov 			= fov
 	view.znear			= znear
 	view.zfar			= zfar

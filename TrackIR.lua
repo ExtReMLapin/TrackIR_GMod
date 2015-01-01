@@ -1,12 +1,10 @@
 
 local _DEBUG = false;
-
 local draw = draw -- very important, no time (time searching in the global table) to waste
 local math = math
 local Angle = Angle
 
-
-function RotateVector(vector, angle) -- nice job garry, i have to recode your functions
+local function RotateVector(vector, angle) -- nice job garry, i have to recode your functions
 	local _vector = vector
 	local _angle = angle
 	_vector:Rotate(angle)
@@ -48,7 +46,7 @@ local function Nicerlimit(var, minu, maxi) -- no ugly view like 'max is 130, min
 end
 
 
-function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
+local function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
 	if LocalPlayer():InVehicle() then return end
 	local view = {}
 	view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(Var_TrackIR_X/500, -15, 10),-1*math.abs(Nicerlimit(Var_TrackIR_X/900, -5, 5))), (angles))

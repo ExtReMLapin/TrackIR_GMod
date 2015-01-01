@@ -8,7 +8,6 @@
 		Know bugs :
 		-In wac vehicles, the CalcView hook won't ignore the cursor move.
 	
-	
 		Changelog :
 		(from older to present)
 		--v--INTERNAL VERSION--v--
@@ -29,6 +28,8 @@
 		+Adding securities (malloc fail, reg read/find key fail)
 		+Adding copyright thing // okay, Error() in tier0 is not a error message, it just close gmod with an error message
 		--v--PUBLIC VERSION--v--
+		+Added leaning system (move your head to the left/right) to lean.
+		
 		
 
 

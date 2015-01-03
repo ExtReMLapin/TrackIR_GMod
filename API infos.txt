@@ -29,10 +29,10 @@
 		+Adding copyright thing // okay, Error() in tier0 is not a error message, it just close gmod with an error message
 		--v--PUBLIC VERSION--v--
 		+Added leaning system (move your head to the left/right) to lean.
+		+Modified some things
+		-Removed UPX compression
+		+added NPStatus
 		
-		
-
-
 		For peoples acting like : 
 		"UHH Y U NO PROVID TEH CODE SOURCE THERE IS MAYBE A VIRUS IN DIS STAHP RITE NOW"
 		
@@ -85,7 +85,8 @@
 	TrackIR_Debug -> [CENSORED - IM NOT EVEN ALLOWED TO PROVIDE ANY ELEMENT FROM THE ORIGINAL API - CENSORED] (it was the source code, just test it yourself, it return a string with all the data in it)
 	
 	Functions returning informations : 
-	TrackIR_Ver (Not really tested)
+	TrackIR_Ver (string) : The version of trackir
+	TrackIR_Status : Return the status (0 or 1) , too tired to explain, i'll see later
 	
 	Functions returning .... nothing : 
 	TrackIR_Update  (Request an update for all the coordinates)

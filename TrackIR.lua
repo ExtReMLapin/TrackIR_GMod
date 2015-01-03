@@ -1,4 +1,9 @@
 
+local NPSTATUS;
+local NPSTATUS_REMOTEACTIVE = 0x0
+local NPSTATUS_REMOTEDISABLED = 0x1
+
+
 local _DEBUG = false;
 local draw = draw -- very important, no time (time searching in the global table) to waste
 local math = math
@@ -82,6 +87,7 @@ hook.Add("Tick", "fix *AfxGetMainWnd()", function() -- wait util gmod has focus,
 		Var_TrackIR_X = TrackIR_X()
 		Var_TrackIR_Y = TrackIR_Y()
 		Var_TrackIR_Z = TrackIR_Z()
+		NP_STATUS = TrackIR_Status()
 	end
 
 	hook.Add("Think", "trackir timer", TrackIR_Timer)
@@ -97,6 +103,7 @@ hook.Add("Tick", "fix *AfxGetMainWnd()", function() -- wait util gmod has focus,
 		draw.SimpleText("Raw X : " .. Var_TrackIR_X, "terminaltitle", 200, 400, Color(255,255,255))	;			draw.SimpleText("Realistic Raw X : " .. math.round(Var_TrackIR_X)/100 .. " cm", "terminaltitle", 470, 400, Color(255,255,255))
 		draw.SimpleText("Raw Y : " .. Var_TrackIR_Y, "terminaltitle", 200, 450, Color(255,255,255))	;			draw.SimpleText("Realistic Raw Y : " .. math.round(Var_TrackIR_Y)/100 .. " cm", "terminaltitle", 470, 450, Color(255,255,255))
 		draw.SimpleText("Raw Z : " .. Var_TrackIR_Z, "terminaltitle", 200, 500, Color(255,255,255))	;			draw.SimpleText("Realistic Raw Z : " .. math.round(Var_TrackIR_Z)/100 .. " cm", "terminaltitle", 470, 500, Color(255,255,255))
+		draw.SimpleText("NP_STATUS : " .. Var_TrackIR_Z, "terminaltitle", 200, 550, Color(255,255,255))	
 		TrackIR_Update()
 	end)
 	end

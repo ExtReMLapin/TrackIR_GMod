@@ -30,8 +30,8 @@
 		--v--PUBLIC VERSION--v--
 		+Added leaning system (move your head to the left/right) to lean.
 		+Modified some things
-		-Removed UPX compression
 		+added NPStatus
+		+Fixed things
 		
 		For peoples acting like : 
 		"UHH Y U NO PROVID TEH CODE SOURCE THERE IS MAYBE A VIRUS IN DIS STAHP RITE NOW"

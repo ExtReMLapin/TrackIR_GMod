@@ -25,7 +25,7 @@ local function TrackIR_Deg_ToRealDeg(deg1)
 	return map(deg1, -16383, 16383, -180, 180)
 end
 
-local function Nicerlimit(var, minu, maxi) -- no ugly view like 'max is 130, min is 130, more like max is 130 but every ° over 130 is reducted (exp function)
+local function Nicerlimit(var, minu, maxi) -- no ugly view like 'max is 130, min is 130, more like max is 130 but every ° over 130 is reducted (1/exp function)
 	local _maxi = maxi + 0.2*maxi -- +20%
 	local _minu = minu + 0.2*minu
 	local _var = var
@@ -63,7 +63,7 @@ local function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the 
 	return view
 end
 
-hook.Add("Tick", "fix *AfxGetMainWnd()", function() -- wait util gmod has focus, else *AfxGetMainWnd() from the module will return a NULL (0x0)
+hook.Add("Tick", "fix *AfxGetMainWnd()", function() -- wait until gmod has focus, else *AfxGetMainWnd() from the module will return a NULL (0x0)
 	if !system.HasFocus() then return end
 	Var_TrackIR_Debug = ""
 	Var_TrackIR_Pitch = 0
@@ -80,14 +80,14 @@ hook.Add("Tick", "fix *AfxGetMainWnd()", function() -- wait util gmod has focus,
 	require("TrackIR") -- no shit sherlock
 	function TrackIR_Timer() -- the best way would be to make it 60/120 times per sec. (i mean, not 60-120, it's 60 OR 120 (depending of the trackir device))
 		TrackIR_Update()
-		Var_TrackIR_Debug = TrackIR_Debug()
-		Var_TrackIR_Pitch = TrackIR_Pitch()
-		Var_TrackIR_Yaw	= TrackIR_Yaw()
-		Var_TrackIR_Roll= TrackIR_Roll()
-		Var_TrackIR_X = TrackIR_X()
-		Var_TrackIR_Y = TrackIR_Y()
-		Var_TrackIR_Z = TrackIR_Z()
-		NP_STATUS = TrackIR_Status()
+		Var_TrackIR_Debug = TrackIR_Debug() or ""
+		Var_TrackIR_Pitch = TrackIR_Pitch() or 0
+		Var_TrackIR_Yaw	= TrackIR_Yaw() or 0
+		Var_TrackIR_Roll= TrackIR_Roll() or 0
+		Var_TrackIR_X = TrackIR_X() or 0
+		Var_TrackIR_Y = TrackIR_Y() or 0
+		Var_TrackIR_Z = TrackIR_Z() or 0
+		NP_STATUS = TrackIR_Status() or 0 // if == 1 , it means it's mouse emulation (which is a bit stupid there but anyway)
 	end
 
 	hook.Add("Think", "trackir timer", TrackIR_Timer)
@@ -103,7 +103,6 @@ hook.Add("Tick", "fix *AfxGetMainWnd()", function() -- wait util gmod has focus,
 		draw.SimpleText("Raw X : " .. Var_TrackIR_X, "terminaltitle", 200, 400, Color(255,255,255))	;			draw.SimpleText("Realistic Raw X : " .. math.round(Var_TrackIR_X)/100 .. " cm", "terminaltitle", 470, 400, Color(255,255,255))
 		draw.SimpleText("Raw Y : " .. Var_TrackIR_Y, "terminaltitle", 200, 450, Color(255,255,255))	;			draw.SimpleText("Realistic Raw Y : " .. math.round(Var_TrackIR_Y)/100 .. " cm", "terminaltitle", 470, 450, Color(255,255,255))
 		draw.SimpleText("Raw Z : " .. Var_TrackIR_Z, "terminaltitle", 200, 500, Color(255,255,255))	;			draw.SimpleText("Realistic Raw Z : " .. math.round(Var_TrackIR_Z)/100 .. " cm", "terminaltitle", 470, 500, Color(255,255,255))
-		draw.SimpleText("NP_STATUS : " .. Var_TrackIR_Z, "terminaltitle", 200, 550, Color(255,255,255))	
 		TrackIR_Update()
 	end)
 	end

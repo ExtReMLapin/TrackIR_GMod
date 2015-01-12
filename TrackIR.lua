@@ -2,7 +2,7 @@ if CLIENT then
 	local NPSTATUS;
 	local NPSTATUS_REMOTEACTIVE = 0x0
 	local NPSTATUS_REMOTEDISABLED = 0x1
-	local DPS = 30
+	local DPS = 60
 
 	local _DEBUG = false;
 	local draw = draw -- very important, no time (time searching in the global table) to waste
@@ -109,10 +109,15 @@ if CLIENT then
 		
 		
 		timer.Create("TrackIR_Net", 1/DPS, 0, function()
-			data = Angle(Nicerlimit(Var_TrackIR_Roll/90, -70, 70), -1*Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130))
-			net.Start( "TrackIR_Data" )
+			data = Angle( Nicerlimit(Var_TrackIR_Roll/90 +Var_TrackIR_X/900, -70, 70), -1*Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130))
+			net.Start( "TrackIR_Data.h" )
 			net.WriteAngle(data)
 			net.SendToServer()
+			
+			net.Start( "TrackIR_Data.s" )
+			net.WriteFloat( -1*Var_TrackIR_X/500 ) 
+			net.SendToServer()
+			
 		
 		end)
 		
@@ -132,21 +137,26 @@ end
 
 if SERVER then
 
-	util.AddNetworkString( "TrackIR_Data") 
-	function TrackIR_ApplyHeadtrd( ent, angle )
-		local headBoneID = ent:LookupBone( "ValveBiped.Bip01_Head1" )
+	util.AddNetworkString( "TrackIR_Data.h")
+	util.AddNetworkString( "TrackIR_Data.s") 
+	
+	function TrackIR_Applybone( ent, angle, bone)
+		if type(angle) == "number" then
+			angle = Angle(angle, 0,0)
+		end
+		local headBoneID = ent:LookupBone( bone )
 		if headBoneID then
 			ent:ManipulateBoneAngles( headBoneID, angle )
 		end
 	end
-	net.Receive("TrackIR_Data", function(lenght, ply) -- dont fucking send it to all the players
-		local tmptbl 	= net.ReadAngle()
-		TrackIR_ApplyHeadtrd(ply, tmptbl)
+	
+
+	net.Receive("TrackIR_Data.h", function(lenght, ply)
+		TrackIR_Applybone(ply, net.ReadAngle(), "ValveBiped.Bip01_Head1" )
 	end)
+	net.Receive("TrackIR_Data.s", function(lenght, ply)
+		TrackIR_Applybone(ply, net.ReadFloat(),  "ValveBiped.Bip01_Spine1")
+	end)
+	
+	
 end
-
-
- 
-
-
-

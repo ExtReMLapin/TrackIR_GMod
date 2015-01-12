@@ -2,7 +2,7 @@ if CLIENT then
 	local NPSTATUS;
 	local NPSTATUS_REMOTEACTIVE = 0x0
 	local NPSTATUS_REMOTEDISABLED = 0x1
-	local DPS = 60
+	local DPS = 30
 
 	local _DEBUG = false;
 	local draw = draw -- very important, no time (time searching in the global table) to waste

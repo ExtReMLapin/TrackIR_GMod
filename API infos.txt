@@ -32,6 +32,8 @@
 		+Modified some things
 		+added NPStatus
 		+Fixed things
+		+Added Leaning (3rd person) with head rotation (3rd person)
+		>Starting stress test on dedicated server
 		
 		For peoples acting like : 
 		"UHH Y U NO PROVID TEH CODE SOURCE THERE IS MAYBE A VIRUS IN DIS STAHP RITE NOW"

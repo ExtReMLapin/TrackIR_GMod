@@ -9,6 +9,22 @@ API Features :**
 -*All TrackIR features* (not shit) -> Important thing, dependent what you're going to do with TrackIR , you better use different profiles on the trackIR software (Default for FPS/Fight gamemode where you need to aim | Smooth for walking or piloting helicopters/planes -see at the bottom of the thread about WAC support)
 
 
+```flow
+st=>start: Lua Script is loaded
+op=>operation: require("TrackIR")
+op2=>operation: Window Handle is registered and sent to TrackIR software
+op3=>operation: Data is requested from the software and can be called from Gmod
+op4=>operation: the Example request the data and apply it to the CalcView hook
+cond=>condition: system.HasFocus()?
+cond2=>condition: Hook started
+
+
+st->cond(yes)->op
+cond(no)->op
+op->op2->op3->cond2(yes)->op4->cond2
+```
+
+
 **Example Features :**
 
 -3DOF Support (Pitch Yaw and Roll)

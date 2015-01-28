@@ -87,7 +87,7 @@ if CLIENT then
 			Var_TrackIR_X = TrackIR_X() or 0
 			Var_TrackIR_Y = TrackIR_Y() or 0
 			Var_TrackIR_Z = TrackIR_Z() or 0
-			NP_STATUS = TrackIR_Status() or 0 // if == 1 , it means it's mouse emulation (which is a bit stupid there but anyway)
+			NP_STATUS = TrackIR_Status() or 0 -- if == 1 , it means it's mouse emulation (which is a bit stupid there but anyway)
 		end
 
 		hook.Add("Think", "trackir timer", TrackIR_Timer)

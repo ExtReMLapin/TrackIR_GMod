@@ -1,8 +1,14 @@
 	
 	DISCLAMER : Tired + cold + me no speak americano = bad english, no one force you to read, just put the lua file in lua/autorun/client (and the module in lua/bin ) if you're lazy
 
+	
+
 
 	Here is why i can't provide the source code of the API : When you get a private API you can't put the source code everywhere , THATS THE POINT OF A PRIVATE API
+	
+		TrackIRServ.exe allows you to work on trackir, emulate the device without any trackir device, you still need to install trackir software because of the DLLs in the trackir software
+		Just install it, don't start it, and start TrackIRServ.exe instead of the software, it will emulate the device, send the data (with sliders), have fun !
+	
 	
 	
 		Know bugs :

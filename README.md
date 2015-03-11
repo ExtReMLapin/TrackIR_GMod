@@ -78,7 +78,7 @@ About WAC :
 
 I tried to contact the dev, no answer he didn't accept my friend request :v:
 
-**Copyright (c) 2006-2014 NaturalPoint Inc. All Rights Reserved**
+**Copyright (c) 2006-2015 NaturalPoint Inc. All Rights Reserved**
 
 
 

@@ -15,6 +15,13 @@ if CLIENT then
 		_vector:Rotate(angle)
 		return _vector
 	end
+	
+	function RotateVectorAroundAxis( angle, axis, degree )
+		local angle1 = angle
+		angle1:RotateAroundAxis( axis, degree )
+		return angle1
+	end
+	
 
 	local function map(value, low1, high1, low2, high2)
 		return (low2 + (value - low1 ) * ( high2 - low2 ) / (high1 - low1))
@@ -54,7 +61,7 @@ if CLIENT then
 	local function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
 		if LocalPlayer():InVehicle() then return end
 		if LocalPlayer():GetScriptedVehicle() != NULL then 
-			if string.StartWith(LocalPlayer():GetScriptedVehicle():GetClass(), "sent_mini") then return end
+			if string.StartWith(LocalPlayer():GetScriptedVehicle():GetClass(), "sent_") then return end
 		end
 		local view = {}
 		view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(Var_TrackIR_X/500, -15, 10),-1*math.abs(Nicerlimit(Var_TrackIR_X/900, -5, 5))), (angles))

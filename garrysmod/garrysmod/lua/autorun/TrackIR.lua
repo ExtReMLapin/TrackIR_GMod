@@ -58,7 +58,7 @@ if CLIENT then
 		end
 		local view = {}
 		view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(Var_TrackIR_X/500, -15, 10),-1*math.abs(Nicerlimit(Var_TrackIR_X/900, -5, 5))), (angles))
-		view.angles			= angles + Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
+		view.angles			= angles + Var_TrackIR_Angle_W
 		view.fov 			= fov
 		view.znear			= znear
 		view.zfar			= zfar
@@ -90,6 +90,8 @@ if CLIENT then
 			Var_TrackIR_X = TrackIR_X() or 0
 			Var_TrackIR_Y = TrackIR_Y() or 0
 			Var_TrackIR_Z = TrackIR_Z() or 0
+			Var_TrackIR_Angle_W = Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
+			Var_TrackIR_Angle_N = Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90, -70, 70))
 			NP_STATUS = TrackIR_Status() or 0 -- if == 1 , it means it's mouse emulation (which is a bit stupid there but anyway)
 		end
 

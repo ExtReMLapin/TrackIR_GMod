@@ -88,6 +88,8 @@ if CLIENT then
 		surface.CreateFont("terminaltitle", {font="Myriad Pro", size=18, antialias=true}) --Title
 
 		require("TrackIR") -- no shit sherlock
+		
+		-- Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
 		function TrackIR_Timer() -- the best way would be to make it 60/120 times per sec. (i mean, not 60-120, it's 60 OR 120 (depending of the trackir device))
 			TrackIR_Update()
 			Var_TrackIR_Debug = TrackIR_Debug() or ""
@@ -97,8 +99,13 @@ if CLIENT then
 			Var_TrackIR_X = TrackIR_X() or 0
 			Var_TrackIR_Y = TrackIR_Y() or 0
 			Var_TrackIR_Z = TrackIR_Z() or 0
-			Var_TrackIR_Angle_W = Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
-			Var_TrackIR_Angle_N = Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90, -70, 70))
+			local ang1 = Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70),0,0)
+			local ang2 = Angle(0,Nicerlimit(Var_TrackIR_Yaw/90, -130, 130),0)
+			local ang3 = Angle(0,0,Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
+			ang3:RotateAroundAxis( ang3:Right(), -1*ang1[1] )
+			ang3:RotateAroundAxis( ang3:Up(), ang2[2] )
+			Var_TrackIR_Angle_W =  ang3
+			Var_TrackIR_Angle_APIRAW = Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
 			NP_STATUS = TrackIR_Status() or 0 -- if == 1 , it means it's mouse emulation (which is a bit stupid there but anyway)
 		end
 

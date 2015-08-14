@@ -60,8 +60,8 @@ if CLIENT then
 
 	local function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
 		if LocalPlayer():InVehicle() then return end
-		if LocalPlayer():GetScriptedVehicle() != NULL then 
-			if string.StartWith(LocalPlayer():GetScriptedVehicle():GetClass(), "sent_") then return end
+		if LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ) != NULL then 
+			if string.StartWith(LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ):GetClass(), "sent_") then return end
 		end
 		local view = {}
 		view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(Var_TrackIR_X/500, -15, 10),-1*math.abs(Nicerlimit(Var_TrackIR_X/900, -5, 5))), (angles))

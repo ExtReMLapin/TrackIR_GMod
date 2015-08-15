@@ -1,3 +1,4 @@
+
 if CLIENT then
 	local NPSTATUS;
 	local NPSTATUS_REMOTEACTIVE = 0x0
@@ -65,7 +66,7 @@ if CLIENT then
 		end
 		local view = {}
 		view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(Var_TrackIR_X/500, -15, 10),-1*math.abs(Nicerlimit(Var_TrackIR_X/900, -5, 5))), (angles))
-		view.angles			= angles + Var_TrackIR_Angle_W
+		view.angles			= angles + (Var_TrackIR_Angle_W or Angle(0,0,0))
 		view.fov 			= fov
 		view.znear			= znear
 		view.zfar			= zfar

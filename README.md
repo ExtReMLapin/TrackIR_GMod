@@ -13,7 +13,7 @@ Greetings ! gmcl_TrackIR is a ClientSide Windows module providing a simple inter
 
 **Example Features :**
 
--3DOF Support (Pitch Yaw and Roll)
+-4DOF Support (Pitch Yaw and Roll + lean left or right)
 
 -Angle limit (So you don't break your neck)
 

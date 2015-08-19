@@ -1,17 +1,22 @@
 ![](http://puu.sh/dTvQb/1c1e78fd52.png)
 
-Greetings ! gmcl_TrackIR is a ClientSide Windows module providing a simple interface to TrackIR software (See bellow for the video and to see how it works)
-**
-API Features :**
+Greetings ! gmcl_TrackIR is a ClientSide Windows module providing a simple interface to TrackIR software
+(See bellow for the video and to see how it works)
 
--*Easy implantation*, with examples to show how to convert raw variables to Ingame variables (To Angles() or to °)
+**API Features :**
+
+-*Easy implantation*, with examples to show how to convert raw variables to Ingame variables (To Angles() or to°)
+
 -*6 DOF API Support* (Pitch, Yaw, Roll, X, Y, Z)
+
 -*All TrackIR features* (not shit) -> Important thing, dependent what you're going to do with TrackIR , you better use different profiles on the trackIR software (Default for FPS/Fight gamemode where you need to aim | Smooth for walking or piloting helicopters/planes -see at the bottom of the thread about WAC support)
 
 **Example Features :**
 
 -3DOF Support (Pitch Yaw and Roll)
+
 -Angle limit (So you don't break your neck)
+
 -"Nice" angle Limit system, when you turn your head and "hit" the angle limit, the camera movement will not be brutally stopped.
 
 

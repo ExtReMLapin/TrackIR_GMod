@@ -3,12 +3,13 @@ if CLIENT then
 	local NPSTATUS;
 	local NPSTATUS_REMOTEACTIVE = 0x0
 	local NPSTATUS_REMOTEDISABLED = 0x1
-	local DPS = 30
+	local DPS = 33 // tickrate multiplier
 
 	local _DEBUG = false;
 	local draw = draw -- very important, no time (time searching in the global table) to waste
 	local math = math
 	local Angle = Angle
+	local data1; local data2;
 
 	local function RotateVector(vector, angle) -- nice job garry, i have to recode your functions
 		local _vector = vector
@@ -108,6 +109,8 @@ if CLIENT then
 			Var_TrackIR_Angle_W =  ang3
 			Var_TrackIR_Angle_APIRAW = Angle(Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130), Nicerlimit(-1*Var_TrackIR_Roll/90 + -2*Var_TrackIR_X/900, -70, 70))
 			NP_STATUS = TrackIR_Status() or 0 -- if == 1 , it means it's mouse emulation (which is a bit stupid there but anyway)
+			data1 = Angle( Nicerlimit(Var_TrackIR_Roll/90 +Var_TrackIR_X/900, -70, 70), -1*Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130))
+			data2 = -1*Var_TrackIR_X/500
 		end
 
 		hook.Add("Think", "trackir timer", TrackIR_Timer)
@@ -127,16 +130,24 @@ if CLIENT then
 			end)
 		end
 		
+		local _data1;
+		local _data2;
 		
 		timer.Create("TrackIR_Net", 1/DPS, 0, function()
-			data = Angle( Nicerlimit(Var_TrackIR_Roll/90 +Var_TrackIR_X/900, -70, 70), -1*Nicerlimit(Var_TrackIR_Pitch/90, -70, 70), Nicerlimit(Var_TrackIR_Yaw/90, -130, 130))
-			net.Start( "TrackIR_Data.h" )
-			net.WriteAngle(data)
-			net.SendToServer()
+			if data1 != _data1 then 
+				_data1 = data1;
+				net.Start( "TrackIR_Data.h" )
+				net.WriteAngle(data1)
+				net.SendToServer()
+			end
 			
-			net.Start( "TrackIR_Data.s" )
-			net.WriteFloat( -1*Var_TrackIR_X/500 ) 
-			net.SendToServer()
+			if data1 != _data1 then 
+				_data1 = data1;
+				net.Start( "TrackIR_Data.s" )
+				net.WriteFloat( data2 ) 
+				net.SendToServer()
+			end
+
 			
 		end)
 		

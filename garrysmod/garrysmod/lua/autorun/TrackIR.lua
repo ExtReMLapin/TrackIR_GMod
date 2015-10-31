@@ -1,11 +1,13 @@
+AddCSLuaFile("client/polyeditor.lua")
 
+if not file.Exists("garrysmod/lua/bin/gmcl_TrackIR_win32.dll", "BASE_PATH") then print("no trackir  m8") return end
 if CLIENT then
 	local NPSTATUS;
 	local NPSTATUS_REMOTEACTIVE = 0x0
 	local NPSTATUS_REMOTEDISABLED = 0x1
-	local DPS = 33 // tickrate multiplier
+	local DPS = 120 // tickrate multiplier
 
-	local _DEBUG = true;
+	local _DEBUG = false;
 	local draw = draw -- very important, no time (time searching in the global table) to waste
 	local math = math
 	local Angle = Angle
@@ -151,10 +153,10 @@ if CLIENT then
 				net.SendToServer()
 			end
 			
-			if data1 != _data1 then 
-				_data1 = data1;
+			if data2 != _data2 then 
+				_data2 = data2;
 				net.Start( "TrackIR_Data.s" )
-				net.WriteFloat( data2 ) 
+				net.WriteFloat( data2 )
 				net.SendToServer()
 			end
 

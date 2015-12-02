@@ -75,7 +75,9 @@ TrackIR_Deg_ToRealDeg -> Convert raw values (from the API) to °
 
 
 TrackIR usb Device
+
 TrackIR Software
+
 Windows (I'll see later for OSX and linux support, i need to contact NaturalPoint about that)
 
 

@@ -1,5 +1,3 @@
-AddCSLuaFile("client/polyeditor.lua")
-
 if not file.Exists("garrysmod/lua/bin/gmcl_TrackIR_win32.dll", "BASE_PATH") then print("no trackir  m8") return end
 if CLIENT then
 	local NPSTATUS;

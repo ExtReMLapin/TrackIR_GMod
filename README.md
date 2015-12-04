@@ -80,6 +80,10 @@ TrackIR Software
 
 Windows (I'll see later for OSX and linux support, i need to contact NaturalPoint about that)
 
+https://s3.amazonaws.com/esharesearch-webinstaller/prerequisites/vc120/vcredist_x86.exe
+
+
+
 
 About WAC : 
 

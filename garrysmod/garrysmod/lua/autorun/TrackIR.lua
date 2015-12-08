@@ -8,9 +8,12 @@ if CLIENT then
 	local _DEBUG = false;
 	local draw = draw -- very important, no time (time searching in the global table) to waste
 	local math = math
+	local type = type
+	local net = net
 	local Angle = Angle
 	local data1; local data2;
 	TrackIR = {}
+		TrackIR.VERSION = "Unknown"
 		TrackIR.Debug = ""
 		TrackIR.Pitch = 0
 		TrackIR.Roll = 0
@@ -75,7 +78,7 @@ if CLIENT then
 
 
 	local function draw_debuginfos()
-		draw.RoundedBox(1, 150, 150, 1300, 400, Color(64, 134, 195,170))
+		draw.RoundedBox(1, 150, 150, 1300, 600, Color(64, 134, 195,170))
 		draw.SimpleText(TrackIR.Debug .. "\nTrackIR.Status = " .. TrackIR.Status, "terminaltitle", 200, 200, Color(255,255,255))
 		draw.SimpleText("Raw Pitch : " .. TrackIR.Pitch, "terminaltitle", 200, 250, Color(255,255,255)) ; 	draw.SimpleText("Realistic Pitch : " .. math.Round(TrackIR_Deg_ToRealDeg(TrackIR.Pitch)) .. "°" , "terminaltitle", 470, 250, Color(255,255,255)) 
 		draw.SimpleText("Raw Yaw : " .. TrackIR.Yaw, "terminaltitle", 200, 300, Color(255,255,255)) ; 		draw.SimpleText("Realistic Yaw : " .. math.Round(TrackIR_Deg_ToRealDeg(TrackIR.Yaw)) .. "°", "terminaltitle", 470, 300, Color(255,255,255))
@@ -83,6 +86,8 @@ if CLIENT then
 		draw.SimpleText("Raw X : " .. TrackIR.X, "terminaltitle", 200, 400, Color(255,255,255))	;			draw.SimpleText("Realistic Raw X : " .. math.Round(TrackIR.X)/100 .. " cm", "terminaltitle", 470, 400, Color(255,255,255))
 		draw.SimpleText("Raw Y : " .. TrackIR.Y, "terminaltitle", 200, 450, Color(255,255,255))	;			draw.SimpleText("Realistic Raw Y : " .. math.Round(TrackIR.Y)/100 .. " cm", "terminaltitle", 470, 450, Color(255,255,255))
 		draw.SimpleText("Raw Z : " .. TrackIR.Z, "terminaltitle", 200, 500, Color(255,255,255))	;			draw.SimpleText("Realistic Raw Z : " .. math.Round(TrackIR.Z)/100 .. " cm", "terminaltitle", 470, 500, Color(255,255,255))
+		draw.SimpleText("Lost Frames : " .. TrackIR.LostFrames, "terminaltitle", 200, 550, Color(255,255,255))	;			draw.SimpleText("TrackIR software version : " .. TrackIR.VERSION, "terminaltitle", 470, 550, Color(255,255,255))
+
 	end
 
 
@@ -105,6 +110,7 @@ if CLIENT then
 
 	local function TrackIR_Timer() -- the best way would be to make it 60/120 times per sec. (i mean, not 60-120, it's 60 OR 120 (depending of the trackir device))
 			TrackIR_Update()
+			TrackIR.VERSION = TrackIR_Ver() or "Unknown"
 			TrackIR.Debug = TrackIR_Debug() or ""
 			TrackIR.Pitch = TrackIR_Pitch() or 0
 			TrackIR.Yaw	= TrackIR_Yaw() or 0
@@ -126,6 +132,7 @@ if CLIENT then
 	end
 
 	hook.Add("HUDPaint", "TrackIr real aiming", function() -- don't get lost my friend, know where you're aiming ;)
+		if TrackIR.VERSION != "5.00" then return end // If trackir is not found, then abort mission
 		local tr = (util.TraceLine( util.GetPlayerTrace(LocalPlayer())).HitPos):ToScreen()
 		draw.RoundedBox(0, tr.x-6, tr.y-6, 12, 12, Color(0, 0, 0,105))
 		draw.RoundedBox(4, tr.x-5, tr.y-5, 10, 10, Color(64, 134, 195,170))	

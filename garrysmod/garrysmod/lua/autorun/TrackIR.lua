@@ -3,7 +3,7 @@ if CLIENT then
 	local NPSTATUS;
 	local NPSTATUS_REMOTEACTIVE = 0x0
 	local NPSTATUS_REMOTEDISABLED = 0x1
-	local DPS = 120 // tickrate multiplier
+	local DPS = 120 -- tickrate multiplier
 
 	local _DEBUG = false;
 	local draw = draw -- very important, no time (time searching in the global table) to waste
@@ -132,7 +132,7 @@ if CLIENT then
 	end
 
 	hook.Add("HUDPaint", "TrackIr real aiming", function() -- don't get lost my friend, know where you're aiming ;)
-		if TrackIR.VERSION != "5.00" then return end // If trackir is not found, then abort mission
+		if TrackIR.VERSION != "5.00" then return end -- If trackir is not found, then abort mission
 		local tr = (util.TraceLine( util.GetPlayerTrace(LocalPlayer())).HitPos):ToScreen()
 		draw.RoundedBox(0, tr.x-6, tr.y-6, 12, 12, Color(0, 0, 0,105))
 		draw.RoundedBox(4, tr.x-5, tr.y-5, 10, 10, Color(64, 134, 195,170))	

@@ -1,5 +1,5 @@
-if not file.Exists("garrysmod/lua/bin/gmcl_TrackIR_win32.dll", "BASE_PATH") then print("no trackir  m8") return end
 if CLIENT then
+	if not file.Exists("garrysmod/lua/bin/gmcl_TrackIR_win32.dll", "BASE_PATH") then print("no trackir  m8") return end
 	local NPSTATUS;
 	local NPSTATUS_REMOTEACTIVE = 0x0
 	local NPSTATUS_REMOTEDISABLED = 0x1

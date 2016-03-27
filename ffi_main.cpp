@@ -12,8 +12,10 @@
 
 CNPTestDlg dlg;
 TRACKIRDATA tid;
-typedef void(*func)(const char* msg, ...);
 
+
+typedef void(*func)(const char* msg, ...);
+static func f = (func)GetProcAddress(GetModuleHandle("tier0.dll"), "Log"); // not the best way but it's working so we don't really care
 
 DLL_EXPORT int trackIR_Pitch(){
 	return (tid.fNPPitch);
@@ -72,11 +74,8 @@ DLL_EXPORT int trackIR_Init()
 	return 0;
 }
 
-int trackIR_End()
+DLL_EXPORT int trackIR_End()
 {
 	dlg.TrackIR_Enhanced_Shutdown();
 	return 0;
 }
-
-
-

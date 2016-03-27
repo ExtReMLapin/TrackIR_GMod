@@ -1,3 +1,4 @@
+--this file has been auto generated
 if TrackIR_Update then return end
 require('ffi')
 ffi.cdef[[
@@ -10,6 +11,7 @@ ffi.cdef[[
 	int trackIR_Update();
 	int trackIR_NPStatus();
 	int trackIR_Init();
+	int trackIR_End();
 ]]
 TrackIR = TrackIR or {}
 

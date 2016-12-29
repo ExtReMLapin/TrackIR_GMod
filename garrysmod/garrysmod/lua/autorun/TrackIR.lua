@@ -92,7 +92,7 @@ if CLIENT then
 
 
 	local function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
-			if LocalPlayer():InVehicle() then return end
+			--if LocalPlayer():InVehicle() then return end
 			if LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ) != NULL then 
 				if string.StartWith(LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ):GetClass(), "sent_") then return end
 			end

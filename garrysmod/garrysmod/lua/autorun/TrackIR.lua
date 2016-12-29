@@ -149,7 +149,7 @@ if CLIENT then
 		
 		local _data1;
 		local _data2;
-		timer.Create("TrackIR_Calc", 1/120, 0, TrackIR_Timer)
+		hook.Add("Think", "TrackIRupdate", TrackIR_Timer)
 		timer.Create("TrackIR_Net", 1/DPS, 0, function()
 			if data1 != _data1 then 
 				_data1 = data1;

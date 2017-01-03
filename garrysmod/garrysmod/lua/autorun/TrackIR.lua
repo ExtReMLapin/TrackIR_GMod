@@ -93,11 +93,21 @@ if CLIENT then
 
 	local function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
 			local vehicle = LocalPlayer():GetVehicle()
+			if LocalPlayer():InVehicle() then return end
 			if IsValid(vehicle) and IsValid(vehicle:GetNWEntity("wac_aircraft")) then return end
 
 			if LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ) != NULL then 
 				if string.StartWith(LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ):GetClass(), "sent_") then return end
 			end
+
+
+			local ang1 = Angle(Nicerlimit(TrackIR.Pitch/90, -70, 70),0,0)
+			local ang2 = Angle(0,Nicerlimit(TrackIR.Yaw/90, -130, 130),0)
+			local ang3 = Angle(0,0,Nicerlimit(-1*TrackIR.Roll/90 + -2*TrackIR.X/900, -70, 70))
+			ang3:RotateAroundAxis( ang3:Right(), -1*ang1[1] )
+			ang3:RotateAroundAxis( ang3:Up(), ang2[2] )
+			Var_TrackIR_Angle_W =  ang3
+
 			local view = {}
 			view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(TrackIR.X/500, -15, 10),-1*math.abs(Nicerlimit(TrackIR.X/900, -5, 5))), (angles))
 			view.angles			= angles + (Var_TrackIR_Angle_W or Angle(0,0,0))
@@ -108,7 +118,24 @@ if CLIENT then
 			return view
 	end
 
+	local function TrackIR_View2( ply, origin, angles, fov, znear, zfar ) -- for the players
 
+			local ang1 = Angle(Nicerlimit(TrackIR.Pitch/90, -70, 70)+angles[1],0,0)
+			local ang2 = Angle(0,Nicerlimit(TrackIR.Yaw/90, -130, 130)+angles[2],0)
+			local ang3 = Angle(0,0,Nicerlimit(-1*TrackIR.Roll/90 + -2*TrackIR.X/900, -70, 70))
+			ang3:RotateAroundAxis( ang3:Right(), -1*ang1[1] )
+			ang3:RotateAroundAxis( ang3:Up(), ang2[2] )
+			Var_TrackIR_Angle_W =  ang3
+
+			local view = {}
+			view.origin 		= origin + RotateVector(Vector(0,Nicerlimit(TrackIR.X/500, -15, 10),-1*math.abs(Nicerlimit(TrackIR.X/900, -5, 5))), (angles))
+			view.angles			= angles + (Var_TrackIR_Angle_W or Angle(0,0,0))
+			view.fov 			= fov
+			view.znear			= znear
+			view.zfar			= zfar
+			view.drawviewer		= false
+			return view
+	end
 
 	local function TrackIR_Timer() -- the best way would be to make it 60/120 times per sec. (i mean, not 60-120, it's 60 OR 120 (depending of the trackir device))
 			TrackIR_Update()
@@ -121,12 +148,6 @@ if CLIENT then
 			TrackIR.Y = TrackIR_Y() or 0
 			TrackIR.Z = TrackIR_Z() or 0
 			TrackIR.LostFrames = TrackIR_LostFrames() or 0;
-			local ang1 = Angle(Nicerlimit(TrackIR.Pitch/90, -70, 70),0,0)
-			local ang2 = Angle(0,Nicerlimit(TrackIR.Yaw/90, -130, 130),0)
-			local ang3 = Angle(0,0,Nicerlimit(-1*TrackIR.Roll/90 + -2*TrackIR.X/900, -70, 70))
-			ang3:RotateAroundAxis( ang3:Right(), -1*ang1[1] )
-			ang3:RotateAroundAxis( ang3:Up(), ang2[2] )
-			Var_TrackIR_Angle_W =  ang3
 			Var_TrackIR_Angle_APIRAW = Angle(Nicerlimit(TrackIR.Pitch/90, -70, 70), Nicerlimit(TrackIR.Yaw/90, -130, 130), Nicerlimit(-1*TrackIR.Roll/90 + -2*TrackIR.X/900, -70, 70))
 			TrackIR.Status = TrackIR_Status() or 0 -- if == 1 , it means it's mouse emulation (which is a bit stupid there but anyway)
 			data1 = Angle( Nicerlimit(TrackIR.Roll/90 +TrackIR.X/900, -70, 70), -1*Nicerlimit(TrackIR.Pitch/90, -70, 70), Nicerlimit(TrackIR.Yaw/90, -130, 130))
@@ -170,6 +191,9 @@ if CLIENT then
 			
 		end)
 		hook.Add("CalcView", "trackirview", TrackIR_View) -- hook.Remove("CalcView", "trackirview")
+		wac.hook("CalcView", "trackirview", TrackIR_View2)
+
+
 		hook.Remove("Tick", "fix *AfxGetMainWnd()") -- everything has been executed, don't let it get executed twice
 		
 	end)

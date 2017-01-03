@@ -92,7 +92,9 @@ if CLIENT then
 
 
 	local function TrackIR_View( ply, origin, angles, fov, znear, zfar ) -- for the players
-			if LocalPlayer():InVehicle() then return end
+			local vehicle = LocalPlayer():GetVehicle()
+			if IsValid(vehicle) and IsValid(vehicle:GetNWEntity("wac_aircraft")) then return end
+
 			if LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ) != NULL then 
 				if string.StartWith(LocalPlayer():GetNetworkedEntity( "ScriptedVehicle", NULL ):GetClass(), "sent_") then return end
 			end

@@ -83,12 +83,6 @@ Windows (I'll see later for OSX and linux support, i need to contact NaturalPoin
 https://s3.amazonaws.com/esharesearch-webinstaller/prerequisites/vc120/vcredist_x86.exe
 
 
-
-
-About WAC : 
-
-I tried to contact the dev, no answer he didn't accept my friend request :v:
-
 **Copyright (c) 2006-2015 NaturalPoint Inc. All Rights Reserved**
 
 

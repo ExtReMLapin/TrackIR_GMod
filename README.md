@@ -24,35 +24,39 @@ Greetings ! gmcl_TrackIR is a ClientSide Windows module providing a simple inter
 
 ![](http://puu.sh/gvJ2u/5004204308.png)
 
+All functions are stored in the TrackIR table after the module got executed
 
+
+This way : 
+
+
+```txt
+] lua_run_cl PrintTable(TrackIR)
+	[...]
+	Update	=	function: 0x0219b60ac978	
+	get_Debug	=	function: 0x0219b60ac9b0
+	get_Pitch	=	function: 0x0219b60ac6f8
+	get_Roll	=	function: 0x0219b60ac7a0
+	get_Status	=	function: 0x0219b60ac878
+	get_Ver	=	function: 0x0219b60ac940
+	get_X	=	function: 0x0219b60ac730
+	get_Y	=	function: 0x0219b60ac840
+	get_Yaw	=	function: 0x0219b60ac768
+	get_Z	=	function: 0x0219b60ac7d8
+
+```
 
 *Functions returning coordinates :*
-TrackIR_X ; TrackIR_Y ; TrackIR_Z ; TrackIR_Pitch ; TrackIR_Yaw ; TrackIR_Roll
+TrackIR.get_X;  TrackIR.get_Y;  TrackIR.get_Z;  TrackIR.get_Pitch;  TrackIR.get_Yaw;  TrackIR.get_Roll;  
 
 *Functions returning debug informations :*
-TrackIR_Debug -> Returning debug infos , if everything is working it will return raw vars formatted , else a message.
+TrackIR.get_Debug -> Returning debug infos , if everything is working it will return raw vars formatted , else a message.
 
 *Functions returning informations :*
-TrackIR_Ver (Not really tested)
+TrackIR.get_Ver (Not really tested)
 
 *Functions returning .... nothing :*
-TrackIR_Update (Request an update for all the coordinates, run it every time you wanna update the view, you better make what i did in the example)
-
-Like this : 
-
-
-	function TrackIR_Timer() -- the best way would be to make it 60/120 times per sec. (i mean, not 60-120, it's 60 OR 120 (depending of the trackir device))
-		TrackIR_Update()
-		Var_TrackIR_Debug = TrackIR_Debug()
-		Var_TrackIR_Pitch = TrackIR_Pitch()
-		Var_TrackIR_Yaw	= TrackIR_Yaw()
-		Var_TrackIR_Roll= TrackIR_Roll()
-		Var_TrackIR_X = TrackIR_X()
-		Var_TrackIR_Y = TrackIR_Y()
-		Var_TrackIR_Z = TrackIR_Z()
-	end
-
-	hook.Add("Think", "trackir timer", TrackIR_Timer)
+TrackIR.Update (Request an update for all the coordinates, run it every time you wanna update the view, you better make what i did in the example)
 
 
 
@@ -80,10 +84,9 @@ TrackIR Software
 
 Windows (I'll see later for OSX and linux support, i need to contact NaturalPoint about that)
 
-https://s3.amazonaws.com/esharesearch-webinstaller/prerequisites/vc120/vcredist_x86.exe
 
 
-**Copyright (c) 2006-2015 NaturalPoint Inc. All Rights Reserved**
+**Copyright (c) 2006-2019 NaturalPoint Inc. All Rights Reserved**
 
 
 

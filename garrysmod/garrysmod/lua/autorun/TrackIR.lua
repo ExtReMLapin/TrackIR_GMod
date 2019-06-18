@@ -1,24 +1,17 @@
 if CLIENT then
 	if not file.Exists("garrysmod/lua/bin/gmcl_TrackIR_win32.dll", "BASE_PATH") then
 		print("no trackir  m8")
-
 		return
 	end
 
 	local DPS = 66 -- tickrate
-	local draw = draw -- very important, no time (time searching in the global table) to waste
+	local draw = draw
 	local math = math
 	local net = net
 	local Angle = Angle
 	local data1
 	local data2
-	TrackIR = {}
-	TrackIR.Pitch = 0
-	TrackIR.Roll = 0
-	TrackIR.Yaw = 0
-	TrackIR.X = 0
-	TrackIR.Y = 0
-	TrackIR.Z = 0
+
 
 
 	local function RotateVector(vector, angle)
@@ -27,10 +20,6 @@ if CLIENT then
 		_vector:Rotate(angle)
 
 		return _vector
-	end -- nice job garry, i have to recode your functions
-
-	local function map(value, low1, high1, low2, high2)
-		return (low2 + (value - low1) * (high2 - low2) / (high1 - low1))
 	end
 
 	local function Nicerlimit(var, minu, maxi)
@@ -71,11 +60,11 @@ if CLIENT then
 			return
 		end
 
-		if LocalPlayer():GetNetworkedEntity("ScriptedVehicle", NULL) ~= NULL then
-			if string.StartWith(LocalPlayer():GetNetworkedEntity("ScriptedVehicle", NULL):GetClass(), "sent_") then
-				return
-			end
+
+		if LocalPlayer():GetNWEntity("ScriptedVehicle", NULL) ~= NULL and string.StartWith(LocalPlayer():GetNetworkedEntity("ScriptedVehicle", NULL):GetClass(), "sent_") then
+			return
 		end
+
 
 		local ang1 = Angle(Nicerlimit(TrackIR.Pitch / 90, -70, 70), 0, 0)
 		local ang2 = Angle(0, Nicerlimit(TrackIR.Yaw / 90, -130, 130), 0)
@@ -84,7 +73,7 @@ if CLIENT then
 		ang3:RotateAroundAxis(ang3:Up(), ang2[2])
 		Var_TrackIR_Angle_W = ang3
 		local view = {}
-		view.origin = origin + RotateVector(Vector(0, Nicerlimit(TrackIR.X / 500, -15, 10), -1 * math.abs(Nicerlimit(TrackIR.X / 900, -5, 5))), (angles))
+		view.origin = origin + RotateVector(Vector(0, Nicerlimit(TrackIR.X / 500, -15, 10), -1 * math.abs(Nicerlimit(TrackIR.X / 900, -5, 5))), angles)
 		view.angles = angles + (Var_TrackIR_Angle_W or Angle(0, 0, 0))
 		view.fov = fov
 		view.znear = znear
@@ -102,7 +91,7 @@ if CLIENT then
 		ang3:RotateAroundAxis(ang3:Up(), ang2[2])
 		Var_TrackIR_Angle_W = ang3
 		local view = {}
-		view.origin = origin + RotateVector(Vector(0, Nicerlimit(TrackIR.X / 500, -15, 10), -1 * math.abs(Nicerlimit(TrackIR.X / 900, -5, 5))), (angles))
+		view.origin = origin + RotateVector(Vector(0, Nicerlimit(TrackIR.X / 500, -15, 10), -1 * math.abs(Nicerlimit(TrackIR.X / 900, -5, 5))), angles)
 		view.angles = angles + (Var_TrackIR_Angle_W or Angle(0, 0, 0))
 		view.fov = fov
 		view.znear = znear
@@ -113,14 +102,14 @@ if CLIENT then
 	end -- for the players
 
 	local function TrackIR_Timer()
-		TrackIR_Update()
-		TrackIR.Pitch = TrackIR_Pitch() or 0
-		TrackIR.Yaw = TrackIR_Yaw() or 0
-		TrackIR.Roll = TrackIR_Roll() or 0
-		TrackIR.X = TrackIR_X() or 0
-		TrackIR.Y = TrackIR_Y() or 0
-		TrackIR.Z = TrackIR_Z() or 0
-		TrackIR.LostFrames = TrackIR_LostFrames and TrackIR_LostFrames() or 0
+		TrackIR.Update()
+		TrackIR.Pitch = TrackIR.get_Pitch() or 0
+		TrackIR.Yaw = TrackIR.get_Yaw() or 0
+		TrackIR.Roll = TrackIR.get_Roll() or 0
+		TrackIR.X = TrackIR.get_X() or 0
+		TrackIR.Y = TrackIR.get_Y() or 0
+		TrackIR.Z = TrackIR.get_Z() or 0
+		TrackIR.LostFrames = TrackIR_LostFrames and TrackIR.get_LostFrames() or 0
 		Var_TrackIR_Angle_APIRAW = Angle(Nicerlimit(TrackIR.Pitch / 90, -70, 70), Nicerlimit(TrackIR.Yaw / 90, -130, 130), Nicerlimit(-1 * TrackIR.Roll / 90 + -2 * TrackIR.X / 900, -70, 70))
 		data1 = Angle(Nicerlimit(TrackIR.Roll / 90 + TrackIR.X / 900, -70, 70), -1 * Nicerlimit(TrackIR.Pitch / 90, -70, 70), Nicerlimit(TrackIR.Yaw / 90, -130, 130))
 		data2 = -1 * TrackIR.X / 500
@@ -138,8 +127,19 @@ if CLIENT then
 		end
 
 		require("TrackIR") -- no shit sherlock
+
+		TrackIR.Pitch = 0
+		TrackIR.Roll = 0
+		TrackIR.Yaw = 0
+		TrackIR.X = 0
+		TrackIR.Y = 0
+		TrackIR.Z = 0
+
+
 		local _data1
 		local _data2
+
+
 		hook.Add("Think", "TrackIRupdate", TrackIR_Timer)
 
 		timer.Create("TrackIR_Net", 1 / DPS, 0, function()
@@ -165,7 +165,7 @@ if CLIENT then
 		end
 
 		hook.Remove("Tick", "fix *AfxGetMainWnd()") -- everything has been executed, don't let it get executed twice
-	end) -- wait until gmod has focus, else *AfxGetMainWnd() from the module will return a NULL (0x0)
+	end) -- wait until gmod has focus, else *AfxGetMainWnd() from the module will return NULL (0x0)
 end
 
 if SERVER then

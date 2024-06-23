@@ -1,3 +1,6 @@
+2024 update : It seems that the natural point policy for the sdk changed, but I have no idea where my trackir device is
+
+
 ![](http://puu.sh/dTvQb/1c1e78fd52.png)
 
 Greetings ! gmcl_TrackIR is a ClientSide Windows module providing a simple interface to TrackIR software
